@@ -18,12 +18,12 @@
 					<label for="username">Username:</label>
 				</td>
 				<td>
-					<input type="text" id="username" size="30" placeholder="Please type in your username" data-th-field="*{username}" style="color: red">
+					<input type="text" id="username" size="30" placeholder="Please type in your username" data-th-field="*{username}" >
 				</td>
 			</tr>
 			<tr>
 				<td></td>
-				<td><span data-th-if="${#fields.hasErrors('username')}" data-th-errors="*{username}"></span></td>
+				<td><span data-th-if="${#fields.hasErrors('username')}" data-th-errors="*{username}" style="color: red"></span></td>
 			</tr>
 			<tr>
 				<td>
@@ -37,15 +37,32 @@
 				<td></td>
 				<td><span data-th-if="${#fields.hasErrors('password')}" data-th-errors="*{password}" style="color: red"></span></td>
 			</tr>
+			
 			<tr>
 				<td></td>
 				<td>
-					<button type="submit">Login</button>
+					<button data-th-if="${captcha == null}"type="submit">Login</button>
 				</td>
 			</tr>
 		</table>
 	</form>
-		
+	<form data-th-if="${captcha != null}"  data-th-action="@{/login}" method="POST">
+		<table>
+			<tr data-th-object="${captcha}">
+				<td data-th-text="*{first} + *{operator} + *{second} + '='">
+				</td>
+				<td>
+					<input type="number" data-th-field="*{givenAnswer}"/>
+				</td>
+				<td data-th-text="*{answer}"></td>
+			</tr>
+			<tr>
+				<td>
+					<button type="submit" size="30">Submit</button>
+				</td>
+			</tr>
+		</table>
+	</form> 
 		
 	</body>
 </html>
